@@ -1,0 +1,9 @@
+:host(.link) {
+    cursor: pointer;
+    transition: all .25s ease;
+
+    &:hover {
+        color: var(--clr-link-hover);
+        fill: var(--clr-link-hover);
+    }
+}

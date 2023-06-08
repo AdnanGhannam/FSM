@@ -1,0 +1,32 @@
+@use "../../utilities/mixin.scss";
+
+.table {
+    // FIXME
+    overflow: auto;
+
+    &__radio {
+        display: none;
+
+        &:not(:checked) {
+            + .table__label {
+                .icon {
+                    color: var(--clr-table-icon-inactive);
+                }
+            }
+        }
+    }
+
+    &__label {
+        @include mixin.flex(space-between);
+        gap: 2em;
+        color: var(--clr-table-header);
+        text-transform: uppercase;
+        font-size: .9em;
+        cursor: pointer;
+    }
+
+    &__cell {
+        padding: .25em .5em;
+        white-space: nowrap;
+    }
+}

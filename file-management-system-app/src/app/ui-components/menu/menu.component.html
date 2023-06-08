@@ -1,0 +1,9 @@
+<ng-template #menu>
+  <div cdkMenu class="menu__content">
+    <ng-content></ng-content>
+  </div>
+</ng-template>
+
+<div [cdkMenuTriggerFor]="menu" class="menu__button">
+    <ng-content select="[button]"></ng-content>
+</div>

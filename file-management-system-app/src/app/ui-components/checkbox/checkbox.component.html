@@ -1,0 +1,14 @@
+<input class="checkbox__input"
+    tabindex="1"
+    type="checkbox"
+    [id]="id"
+    [name]="name"
+    [placeholder]="placeholder"
+    [checked]="_checked"
+    [disabled]="disabled"
+    (change)="_onChange($event.target)" />
+<label class="checkbox__label" [for]="id" tabindex="1">
+    <span class="material-icons-outlined checkbox__icon">
+        done
+    </span>
+</label>

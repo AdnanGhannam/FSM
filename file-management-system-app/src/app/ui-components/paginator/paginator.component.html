@@ -1,0 +1,22 @@
+<div class="paginator__container">
+    <button class="paginator__button"
+        tabindex="1" 
+        (click)="_onValueChange(currentPage - 1)"
+        [disabled]="currentPage == 1"
+    >Previous</button>
+
+    <button class="paginator__button"
+        tabindex="1" 
+        [disabled]="num == 0"
+        [class.ellipsis]="num == 0"
+        [class.active]="num == currentPage"
+        (click)="_onValueChange(num)"
+        *ngFor="let num of numbers"
+    >{{ num != 0 ? num : "..." }}</button>
+
+    <button class="paginator__button"
+        tabindex="1" 
+        (click)="_onValueChange(currentPage + 1)"
+        [disabled]="currentPage == length"
+    >Next</button>
+</div>

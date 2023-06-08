@@ -1,0 +1,49 @@
+@mixin setPosition($t: auto, $r: auto, $b: auto, $l: auto) {
+    top: $t;
+    right: $r;
+    bottom: $b;
+    left: $l;
+}
+
+@mixin absolute($t: auto, $r: auto, $b: auto, $l: auto, $x: 0px, $y: 0px) {
+    position: absolute;
+    @include setPosition($t, $r, $b, $l);
+    transform: translate($x, $y);
+}
+
+@mixin absoluteCenter() {
+    @include absolute(50%, auto, auto, 50%, -50%, -50%);
+}
+
+@mixin flex($jc: center, $ai: center, $dir: row, $wrap: nowrap) {
+    display: flex;
+    justify-content: $jc;
+    align-items: $ai;
+    flex-direction: $dir;
+    flex-wrap: $wrap;
+}
+
+@mixin grid($r, $c, $rg: 0px, $cg: 0px) {
+    display: grid;
+    grid-template-rows: $r;
+    grid-template-columns: $c;
+    row-gap: $rg;
+    column-gap: $cg;
+}
+
+@mixin hasBackground($url) {
+    background-image: url($url);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+@mixin size($s) {
+    width: $s;
+    height: $s;
+}
+
+@mixin minSize($s) {
+    min-width: $s;
+    min-height: $s;
+}

@@ -1,0 +1,12 @@
+<div  *ngIf="big then bigProgress else smallProgress"></div>
+    
+<ng-template #bigProgress>
+    <div class="progress__line progress__total"></div>
+    <div class="progress__line progress__prec" [ngStyle]="{'transform': 'rotateZ(' + degree + 'deg)'}"></div>
+    <strong class="progress__number">{{ precentage }} %</strong>
+</ng-template>
+
+<ng-template #smallProgress>
+    <div class="progress__line progress__total"></div>
+    <div class="progress__line progress__prec" [style.width.%]="precentage"></div>
+</ng-template>

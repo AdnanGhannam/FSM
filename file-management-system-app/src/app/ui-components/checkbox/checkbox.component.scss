@@ -1,0 +1,45 @@
+@use "../../utilities/mixin.scss";
+
+:host(.checkbox) {
+    display: inline-block;
+}
+
+.checkbox {
+    &__input {
+        display: none;
+
+        &:checked {
+            + .checkbox__label {
+                background-color: var(--bg-checkbox-checked);
+                border-color: transparent;
+                color: var(--clr-checkbox-checked);
+
+                .checkbox__icon {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+    &__label {
+        @include mixin.flex();
+        display: inline-flex;
+        font-size: .8em;
+        $size: 18px;
+        @include mixin.size($size);
+        border: 1px solid var(--clr-checkbox-border);
+        border-radius: 3px;
+        background-color: var(--bg-checkbox);
+        cursor: pointer;
+        transition: all .2s ease;
+
+        &:active,
+        &:focus-within {
+            box-shadow: var(--bs-checkbox);
+        }
+    }
+
+    &__icon {
+        opacity: 0;
+    }
+}

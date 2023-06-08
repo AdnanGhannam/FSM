@@ -1,0 +1,20 @@
+@use "../../utilities/mixin.scss";
+
+:host(.label) {
+    display: inline-block;
+    font-size: .75em;
+    padding: .25em .75em;
+    border-radius: 3px;
+    position: relative;
+    overflow: hidden;
+    color: var(--clr-label);
+    font-weight: 500;
+
+    &::before {
+        @include mixin.absolute(0, 0, 0, 0);
+        z-index: -1;
+        content: "";
+        background-color: var(--clr-label);
+        opacity: .3;
+    }
+}

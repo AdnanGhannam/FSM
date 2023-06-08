@@ -1,0 +1,38 @@
+http://preview.themeforest.net/item/filedash-file-manager-dashboard/full_screen_preview/26752697
+
+https://filedash.laborasyon.com/demos/default/index.html
+
+==
+
+- User (login, CRUD)
+- User can upload files, download accessable files
+- User can define permissions, type, visiblilty for an owned file
+- User got usage limits, depending on his plan
+- User can add folders, move file to folders
+- User can extend his usage limits by upgrading
+- User can add a folders / files to favorite with limits (5 fav...)
+- User can search in his files
+- User can find other's files by (sharingId / fileName)
+- User has notifications for (storage limits, file CRUD)
+
+==
+
+User (name, password, email, root-folder, notifications, plans)
+
+Folder (name, max-size, current-size, path, visibility, permissions, folders, files)
+File (name, size, path, type, parent)
+
+FolderPermission (folder, user, permission)
+
+Plan (name, extra-space, time-length, cost, share-limits)
+
+payment (card-number, card-month, card-year, CVC, card-name, amount, date)
+
+Notification (?)
+
+==
+
+file-visibility: public, private, custom
+file-permissions: read, write
+file-types: img, vid, doc, other
+file-name is unique in a folder

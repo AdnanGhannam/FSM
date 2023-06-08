@@ -1,0 +1,54 @@
+@use "../../utilities/mixin.scss";
+
+@mixin withBackground() {
+    background-color: var(--bg-button);
+    color: var(--clr-button-hover);
+}
+
+:host(.button) {
+    @include mixin.flex;
+    gap: .25em;
+    font: inherit;
+    font-weight: 500;
+    padding: .35em .75em;
+    border: 1px solid var(--clr-button-border);
+    background-color: transparent;
+    color: var(--clr-button);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all .25s ease;
+
+    &.filled {
+        @include withBackground();
+        position: relative;
+
+        &::before {
+            content: "";
+            @include mixin.absolute(0, 0, 0, 0);
+            z-index: 1;
+            background-color: var(--bg-button-overlay);
+            opacity: 0;
+            transition: inherit;
+        }
+    }
+
+    &:hover {
+        &:not(.filled) {
+            @include withBackground();
+        }
+
+        &.filled {
+            &::before {
+                opacity: .2;
+            }
+        }
+    }
+
+    &:focus-visible {
+        outline: none;
+    }
+
+    .button__content {
+        z-index: 10;
+    }
+}

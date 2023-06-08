@@ -1,0 +1,47 @@
+@use "../../utilities/mixin.scss";
+
+:host(.progress) {
+    display: block;
+    height: .25em;
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+
+    &.big {
+        $size: 175px;
+        @include mixin.size($size);
+        clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+        margin-bottom: calc(-1 * ($size / 2));
+
+        .progress__line {
+            @include mixin.absolute(0px, 0px, 0px, 0px);
+            clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+            border: 25px solid var(--bg-progress-total);
+            border-radius: 50%;
+            height: 100%;
+        }
+
+        .progress__prec {
+            border-color: var(--bg-progress-prec);
+        }
+
+        .progress__number {
+            @include mixin.absolute(50%, auto, auto, 50%, -50%, -85%);
+            font-size: 1.1em;
+        }
+    }
+
+    &:not(.big) {
+        .progress__line {
+            @include mixin.absolute(0px, auto, 0px, 0px);
+        }
+
+        .progress__total {
+            background-color: var(--bg-progress-total);
+        }
+
+        .progress__prec {
+            background-color: var(--bg-progress-prec);
+        }
+    }
+}

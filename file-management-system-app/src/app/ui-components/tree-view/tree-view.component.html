@@ -1,0 +1,19 @@
+<cdk-tree [dataSource]="dataSource" [treeControl]="treeControl">
+  <!-- This is the tree node template for leaf nodes -->
+  <cdk-nested-tree-node *cdkTreeNodeDef="let node" class="example-tree-node">
+    <span class="material-icons-outlined">
+        {{node.type == "folder" ? "folder" : "description" }}
+    </span>
+    {{node.name}}
+  </cdk-nested-tree-node>
+  <!-- This is the tree node template for expandable nodes -->
+  <cdk-nested-tree-node *cdkTreeNodeDef="let node; when: hasChild" class="example-tree-node">
+    <span class="material-icons-outlined" cdkTreeNodeToggle>
+        {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+    </span>
+    {{node.name}}
+    <div [class.example-tree-invisible]="!treeControl.isExpanded(node)">
+      <ng-container cdkTreeNodeOutlet></ng-container>
+    </div>
+  </cdk-nested-tree-node>
+</cdk-tree>

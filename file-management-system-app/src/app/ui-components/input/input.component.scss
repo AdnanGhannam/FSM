@@ -1,0 +1,13 @@
+:host(.input) {
+    border: 1px solid var(--clr-input-border);
+    border-radius: 4px;
+    color: var(--clr-input);
+    font: inherit;
+    font-size: .8em;
+    padding: .5em .75em;
+
+    &:focus {
+        outline: none;
+        border-color: var(--clr-input-border-focus);
+    }
+}

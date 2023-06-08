@@ -1,0 +1,68 @@
+:root {
+    --white: #fff;
+    --black: #000;
+    --blue: #0062ff;
+    --light-blue: #50b5ff;
+    --alpha-blue: #0062ff20;
+    --gray: #737373;
+    --light-gray: #dfdfdf;
+    --green: #3dd598;
+    --purple: #a461d8;
+    --yellow: #ffc542;
+    --red: #fc5a5a;
+
+    --clr-button: var(--blue);
+    --clr-button-hover: var(--white);
+    --clr-button-border: var(--blue);
+    --bg-button: var(--blue);
+    --bg-button-overlay: var(--black);
+
+    --clr-input: var(--gray);
+    --clr-input-border: var(--light-gray);
+    --clr-input-border-focus: var(--blue);
+
+    --clr-link-hover: var(--blue);
+
+    --clr-avatar: var(--white);
+    --bg-avatar: var(--blue);
+    --clr-avatar-border: var(--white);
+
+    --bs-menu: 0px 5px 10px -1px rgba(0, 0, 0, 0.15);
+
+    --bg-progress-total: var(--light-gray);
+
+    --clr-loader-border: var(--light-gray);
+    --clr-loader-border-top: var(--blue);
+
+    --clr-checkbox-border: var(--light-gray);
+    --bg-checkbox: var(--white);
+    --bg-checkbox-checked: var(--blue);
+    --clr-checkbox-checked: var(--white);
+    --bs-checkbox: 0 0 0 3px var(--alpha-blue);
+
+    --clr-paginator-border: var(--light-gray);
+    --bg-paginator-button: var(--white);
+    --clr-paginator-button-active: var(--white);
+    --bg-paginator-button-active: var(--blue);
+    --bs-paginator-button: 0 0 0 2px var(--alpha-blue);
+
+    --clr-table-header: var(--gray);
+    --clr-table-icon-inactive: var(--light-gray);
+}
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+.material-icons-outlined {
+    font-size: inherit;
+    user-select: none;
+}

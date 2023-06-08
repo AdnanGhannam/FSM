@@ -1,0 +1,7 @@
+@use "../../utilities/mixin.scss";
+
+:host(.toolbar) {
+    padding: .75em 1em;
+    @include mixin.flex(flex-end);
+    gap: .5em;
+}

@@ -1,0 +1,19 @@
+@use "../../utilities/mixin.scss";
+
+:host(.loader) {
+    display: block;
+    @include mixin.size(2.5em);
+    border: 5px solid var(--clr-loader-border);
+    border-top-color: var(--clr-loader-border-top);
+    border-radius: 50%;
+    animation: rotation 0.8s linear infinite;
+}
+
+@keyframes rotation {
+    from {
+        transform: rotateZ(0deg);
+    }
+    to {
+        transform: rotateZ(360deg);
+    }
+}

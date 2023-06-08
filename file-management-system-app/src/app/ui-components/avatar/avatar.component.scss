@@ -1,0 +1,20 @@
+@use '../../utilities/mixin.scss';
+
+:host(.avatar) {
+    position: relative;
+    display: inline-block;
+    @include mixin.size(2.75em);
+    font-weight: 600;
+    background-clip: padding-box;
+    background-color: var(--bg-avatar);
+    color: var(--clr-avatar);
+    border: 1px solid var(--clr-avatar-border);
+    border-radius: 50%;
+    overflow: hidden;
+
+    &::before {
+        content: attr(data-letter);
+        display: inline-block;
+        @include mixin.absoluteCenter;
+    }
+}
