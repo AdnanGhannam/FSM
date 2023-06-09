@@ -25,6 +25,10 @@ const create = () => {
             type: Number,
             required: true,
             default: 1
+        },
+        level: {
+            type: Number,
+            required: true,
         }
     });
 

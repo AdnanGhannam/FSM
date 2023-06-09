@@ -1,6 +1,9 @@
+@import "~@angular/cdk/overlay-prebuilt.css";
+
 :root {
     --white: #fff;
     --black: #000;
+    --alpha-black: #0001;
     --blue: #0062ff;
     --light-blue: #50b5ff;
     --alpha-blue: #0062ff20;
@@ -10,6 +13,7 @@
     --purple: #a461d8;
     --yellow: #ffc542;
     --red: #fc5a5a;
+    --alpha-red: #fcaaaa;
 
     --clr-button: var(--blue);
     --clr-button-hover: var(--white);
@@ -20,6 +24,9 @@
     --clr-input: var(--gray);
     --clr-input-border: var(--light-gray);
     --clr-input-border-focus: var(--blue);
+    --bs-input: 0 0 0 3px var(--alpha-blue);
+    --bs-input-invalid: 0 0 0 3px var(--alpha-red);
+    --clr-input-border-invalid: var(--red);
 
     --clr-link-hover: var(--blue);
 
@@ -48,6 +55,17 @@
 
     --clr-table-header: var(--gray);
     --clr-table-icon-inactive: var(--light-gray);
+
+    --bg-sign-form-overlay: var(--blue);
+    --bg-sign-form-card: var(--white);
+    --clr-sign-form-border: var(--light-gray);
+    --clr-sign-form-errors: var(--red);
+    --clr-sign-form-success: var(--green);
+
+    --bg-plans: var(--white);
+    --bs-plans: 0 0 15px 3px var(--alpha-black);
+    --bs-plans-active: 0 0 0 3px var(--alpha-blue);
+    --clr-plans-seperator: var(--light-gray);
 }
 
 *,

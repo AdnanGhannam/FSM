@@ -1,0 +1,64 @@
+@use "../../utilities/mixin.scss";
+
+:host(.sign-form) {
+    @include mixin.flex;
+    min-height: 100dvh;
+    position: relative;
+    background-image: url("/assets/images/sign-form-bg.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+
+    &::before {
+        content: "";
+        @include mixin.absolute(0, 0, 0, 0);
+        z-index: 1;
+        background-color: var(--bg-sign-form-overlay);
+        opacity: .5;
+    }
+}
+
+.sign-form {
+
+    &__card {
+        width: 400px;
+        background-color: var(--bg-sign-form-card);
+        padding: 2em;
+        border-radius: 4px;
+        z-index: 10;
+        text-align: center;
+
+        ::ng-deep &__content {
+            @include mixin.flex(flex-start, stretch, column);
+            gap: 1em;
+            padding: 1.5em 0;
+
+            .success {
+                color: var(--clr-sign-form-success);
+            }
+
+            .checkbox {
+                @include mixin.flex;
+                gap: .5em;
+            }
+
+            .button {
+                width: 100%;
+            }
+
+            .errors {
+                color: var(--clr-sign-form-errors);
+            }
+        }
+        
+    }
+
+
+    &__footer {
+        border-top: 1px solid var(--clr-sign-form-border);
+        
+        .button {
+            width: auto;
+            align-self: center;
+        }
+    }
+}

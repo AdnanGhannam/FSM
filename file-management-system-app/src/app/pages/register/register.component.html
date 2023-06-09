@@ -1,0 +1,27 @@
+<fms-sign-form title="Register" message="Already have an account?" linkTo="/login">
+    <form class="sign-form__card__content" #form="ngForm" (submit)="register(form)">
+        <small class="success" *ngIf="planId">Plan choosed</small>
+        <input class="fms-input" 
+            placeholder="Username"
+            name="username"
+            required
+            ngModel />
+        <input class="fms-input" 
+            placeholder="email"
+            type="email"
+            name="email"
+            required
+            ngModel />
+        <input class="fms-input" 
+            placeholder="password"
+            type="password"
+            name="password"
+            required 
+            ngModel />
+        <button type="button" (click)="openDialog()" class="fms-button">View Plans</button>
+        <button type="submit" [filled]="true" class="button fms-button">Register</button>
+        <div class="errors">
+            <small *ngFor="let error of errors" class="errors">*{{ error.message }}</small>
+        </div>
+    </form>
+</fms-sign-form>

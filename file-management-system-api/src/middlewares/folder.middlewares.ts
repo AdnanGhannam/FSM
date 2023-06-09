@@ -30,12 +30,22 @@ export const getDirSize = (dirPath: string) => {
 export const getFolder: RequestHandler = async (req, res, next) => {
     const { folderId: id } = req.params as any;
 
+    if (!id) {
+        // get file's parent folder
+        const { file } = res.locals;
+        res.locals.folder = file.parentFolder;
+
+        next();
+        return;
+    }
+
     if (!Types.ObjectId.isValid(id)) {
         return res.status(400)
             .json(httpErrors(`Id: '${id}' is not valid`));
     }
 
     const folder = await db.Folder.findById(id)
+        .populate("usersPermissions")
         .populate("parentFolder")
         .populate("subFolders")
         .populate("subFiles");
@@ -64,6 +74,47 @@ export const checkForFolderDuplication: RequestHandler = async (req, res, next) 
     if (existedFolder) {
         return res.status(400)
             .json(httpErrors(`Duplicated file name: '${name}'`));
+    }
+
+    next();
+};
+
+export const checkForReadPermissions: RequestHandler = async (req, res, next) => {
+    const { user, folder } = res.locals;
+
+    if (user.id == folder.owner) {
+        next();
+        return;
+    }
+
+    const folderPermission = await db.FolderPermission.findOne({ user: user.id, folder: folder.id });
+
+    if (!folderPermission) {
+        return res.status(403)
+            .json(httpErrors("You don't have access to this folder"));
+    }
+
+    next();
+};
+
+export const checkForWritePermissions: RequestHandler = async (req, res, next) => {
+    const { user, folder } = res.locals;
+
+    if (user.id == folder.owner) {
+        next();
+        return;
+    }
+
+    const folderPermission = await db.FolderPermission.findOne({ user: user.id, folder: folder.id });
+
+    if (!folderPermission) {
+        return res.status(403)
+            .json(httpErrors("You don't have access to this folder"));
+    }
+
+    if (folderPermission.permissions == "read") {
+        return res.status(401)
+            .json(httpErrors("You can't write on this folder"));
     }
 
     next();

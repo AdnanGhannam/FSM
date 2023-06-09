@@ -16,6 +16,7 @@
     color: var(--clr-button);
     border-radius: 4px;
     cursor: pointer;
+    text-decoration: none;
     transition: all .25s ease;
 
     &.filled {

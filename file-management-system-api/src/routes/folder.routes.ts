@@ -6,23 +6,22 @@ import {
     getRequestFile, 
     getFile, 
     checkForStorage, 
-    checkForWritePermissions,
-    checkForReadPermissions
 } from "../middlewares/file.middlewares";
 
 import {
     checkForFolderDuplication,
-    getFolder
+    getFolder,
+    checkForWritePermissions,
+    checkForReadPermissions,
 } from "../middlewares/folder.middlewares";
 
-// const REMOVE_FOLDER = "/rmdir/:folderId";
-
-// TODO add permission to folder
 const GET_FOLDER = "/ls/:folderId";
-const CREATE_FOLDER = "/mkdir/:folderId";
-const MOVE_FILE = "/mv/:folderId/:fileId";
-const REMOVE_FILE = "/rm/remove/:fileId";
 const UPLOAD_FILE = "/upload/:folderId/";
+const CREATE_FOLDER = "/mkdir/:folderId";
+const REMOVE_FOLDER = "/rmdir/:folderId";
+const UPDATE_FOLDER_PERMISSIONS = "/chmod/:folderId";
+const REMOVE_FILE = "/rm/:fileId";
+const MOVE_FILE = "/mv/:folderId/:fileId";
 const DOWNLOAD_FILE = "/download/:fileId";
 
 const folderRoutes = (app: Express) => {
@@ -59,21 +58,35 @@ const folderRoutes = (app: Express) => {
             checkForFileDuplication
         ],
         foldersController.moveFileEndpoint);
-    app.put(REMOVE_FILE,
+    app.delete(REMOVE_FILE,
         [
             auth.authenticate,
             getFile,
+            getFolder,
             checkForWritePermissions,
         ],
         foldersController.removeFileEndpoint);
+    app.delete(REMOVE_FOLDER,
+        [
+            auth.authenticate,
+            getFolder,
+            checkForWritePermissions
+        ],
+        foldersController.removeFolderEndpoint);
     app.get(DOWNLOAD_FILE, 
         [
             auth.authenticate,
             getFile,
-            // TODO
-            // checkForReadPermissions
+            getFolder,
+            checkForReadPermissions
         ],
         foldersController.downloadEndpoint);
+    app.put(UPDATE_FOLDER_PERMISSIONS,
+        [
+            auth.authenticate,
+            getFolder
+        ],
+        foldersController.updateFolderPermissionsEndpoint);
 };
 
 export default folderRoutes;

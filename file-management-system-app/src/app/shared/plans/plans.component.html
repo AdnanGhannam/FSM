@@ -1,0 +1,27 @@
+<div class="plans-box">
+    <div *ngFor="let plan of plans; index as i" class="plan" (click)="onChange(plan._id)">
+        <input name="plan" [id]="plan._id" type="radio" class="plan__input" 
+                [checked]="plan._id == currentActive"/>
+        <label [for]="plan._id" class="plan__label">
+            <h3>{{ plan.name }}</h3>
+            <h2>{{ plan.storage }} GB for {{ plan.duration }} month</h2>
+            <p>Costs {{ plan.cost }}$</p>
+            <div class="plan__features">
+                <strong>Including:</strong>
+                <p class="feature">
+                    <span class="material-icons-outlined">
+                        verified
+                    </span>
+                    {{ plan.storage }} GB for storage
+                </p>
+                <p class="feature">
+                    <span class="material-icons-outlined">
+                        verified
+                    </span>
+                    {{ plan.numberOfMemebers }} people to share a file with
+                </p>
+            </div>
+        </label>
+    </div>
+</div>
+<button (click)="dialogRef.close(currentActive)" class="plans-button fms-button">Choose</button>

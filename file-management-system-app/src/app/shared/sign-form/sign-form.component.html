@@ -1,0 +1,13 @@
+<div class="sign-form__card">
+    <div class="sign-form__card__content sign-form__header">
+        <div class="sign-form__img-box">
+            <img src="/assets/images/upload-icon.png"/>
+        </div>
+        <h4>{{ title }}</h4>
+    </div>
+    <ng-content class="sign-form__card__content"></ng-content>
+    <div class="sign-form__card__content sign-form__footer">
+        <p>{{ message }}</p>
+        <a [routerLink]="linkTo" class="fms-button button">Click here</a>
+    </div>
+</div>

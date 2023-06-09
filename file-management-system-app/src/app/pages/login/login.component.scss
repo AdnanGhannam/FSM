@@ -1,0 +1,7 @@
+@use "../../utilities/mixin.scss";
+
+.login-form {
+    &__row {
+        @include mixin.flex(space-between);
+    }
+}

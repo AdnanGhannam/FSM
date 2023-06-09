@@ -5,6 +5,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UiComponentsModule } from './ui-components/ui-components.module';
 import { FormsModule } from '@angular/forms';
+import { SharedModule } from './shared/shared.module';
+import { PagesModule } from './pages/pages.module';
+import { CanActivateSignForm } from './guards/CanActivateSignForm';
 
 @NgModule({
   declarations: [
@@ -14,7 +17,9 @@ import { FormsModule } from '@angular/forms';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    UiComponentsModule
+    UiComponentsModule,
+    SharedModule,
+    PagesModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -56,7 +56,8 @@ const uploadFileEndpoint: RequestHandler = async (req, res) => {
         path: storage, 
         file: requestFile, 
         type, 
-        folder
+        folder,
+        user
     } = res.locals;
 
     tryHandle(async () => {
@@ -73,6 +74,8 @@ const uploadFileEndpoint: RequestHandler = async (req, res) => {
             });
 
             await folder.updateOne({ subFiles: [...folder.subFiles, file.id] });
+
+            await user.updateOne({ usage: requestFile.size });
         });
 
         // move it to storage
@@ -120,7 +123,28 @@ const moveFileEndpoint: RequestHandler = (req, res) => {
 };
 
 const removeFileEndpoint: RequestHandler = (req, res) => {
-    
+    const { folder, file, user } = res.locals;
+
+    const fullFilePath = path.join(path.dirname(require.main!.filename), file.path, file.name);
+    const fileSize = fs.statSync(fullFilePath).size;
+
+    tryHandle(async () => {
+        const session = await connection.startSession();
+
+        await session.withTransaction(async () => {
+            await file.deleteOne();
+
+            await folder.updateOne({ $pull: { subFiles: file.id } });
+
+            await user.updateOne({ usage: user.usage - fileSize });
+
+            fs.rm(fullFilePath, console.error);
+        });
+
+        await session.endSession();
+
+        res.status(204).json();
+    }, res)
 };
 
 const downloadEndpoint: RequestHandler = (req, res) => {
@@ -129,13 +153,89 @@ const downloadEndpoint: RequestHandler = (req, res) => {
     res.status(200).download(fullFilePath);
 };
 
+// FIXME check for allowed number of memebers depending on the current plan
+const updateFolderPermissionsEndpoint: RequestHandler = (req, res) => {
+    const { folder, user } = res.locals;
+    const { permissions } = req.body;
+
+    if (folder.owner != user.id) {
+        return res.status(401)
+            .json(httpErrors("You don't have privilege to do this action"));
+    }
+
+    if (!Array.isArray(permissions)) {
+        return res.status(400)
+            .json(httpErrors("wrong request format"));
+    }
+
+    tryHandle(async () => {
+        const session = await connection.startSession();
+
+        await session.withTransaction(async () => {
+            const folderPermissions: any = [];
+            for (let p of permissions) {
+                if (!p.user || !p.permission) continue;
+
+                if (!Types.ObjectId.isValid(p.user)) continue;
+
+                if (!await db.FolderPermission.findOne({ folder: folder.id, user: p.user })) {
+                    const newPermission = await db.FolderPermission.create({
+                        user: p.user,
+                        folder: folder.id,
+                        permissions: p.permission
+                    });
+
+                    if (newPermission) folderPermissions.push(newPermission.id);
+                }
+            }
+
+            await folder.updateOne({ usersPermissions: folderPermissions });
+        });
+
+        await session.endSession();
+    }, res);
+    res.status(204).json();
+};
+
+const removeFolderEndpoint: RequestHandler = async (req, res) => {
+    const { folder } = res.locals;
+
+    if (folder.subFiles.length != 0 || folder.subFolders.length != 0) {
+        return res.status(400)
+            .json(httpErrors("This Folder can't be deleted, because it has a sub-folders or sub-files"));
+    }
+
+    tryHandle(async () => {
+        const session = await connection.startSession();
+
+        await session.withTransaction(async () => {
+            const parent = folder.parentFolder;
+
+            if (parent) {
+                await parent.updateOne({ $pull: { subFolders: folder.id }});
+            }
+
+            await folder.deleteOne();
+
+            const fullPath = path.join(path.dirname(require.main!.filename), folder.path, folder.name);
+            fs.rmdirSync(fullPath);
+        });
+
+        await session.endSession();
+
+        res.status(204).json();
+    }, res);
+};
+
 const foldersController = {
     getEndpoint,
     createFolderEndpoint,
     uploadFileEndpoint,
     moveFileEndpoint,
     removeFileEndpoint,
-    downloadEndpoint
+    downloadEndpoint,
+    updateFolderPermissionsEndpoint,
+    removeFolderEndpoint
 };
 
 export default foldersController;

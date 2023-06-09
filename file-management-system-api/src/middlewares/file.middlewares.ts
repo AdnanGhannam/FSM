@@ -8,13 +8,6 @@ import mime from "mime";
 import { Types } from "mongoose";
 import { Visibilities } from "../models/Folder.model";
 
-// export const getPathDetails = (folderPath: string) => {
-//     const dirname = "/storage" + (path.dirname(folderPath) === '.' ? '' : path.dirname(folderPath));
-//     const basename = path.basename(folderPath);
-
-//     return { dirname, basename };
-// }
-
 /**
  * { file, type }
  */
@@ -56,69 +49,6 @@ export const getFile: RequestHandler = async (req, res, next) => {
     }
 
     res.locals.file = file;
-    next();
-};
-
-/**
- *  { folder, path } where path is: folderPath + folderName
- */
-// export const getFolder: RequestHandler = async (req, res, next) => {
-//     const { folderPath } = req.params;
-//     const { dirname, basename } = getPathDetails(folderPath);
-
-//     const folder = await db.Folder.findOne({ path: path.normalize(dirname), name: basename })
-//         .populate("subFolders")
-//         .populate("subFiles");
-
-//     if (!folder) {
-//         return res.status(404)
-//             .json(httpErrors(`Folder with path: '${dirname}/${basename}' is not found`));
-//     }
-
-//     res.locals.folder = folder;
-//     res.locals.path = getStorage(dirname, basename);
-//     next();
-// }
-
-
-export const checkForReadPermissions: RequestHandler = async (req, res, next) => {
-    const { user, folder } = res.locals;
-
-    if (user.id == folder.owner) {
-        next();
-        return;
-    }
-
-    const folderPermission = await db.FolderPermission.findOne({ user: user.id, folder: folder.id });
-
-    if (!folderPermission) {
-        return res.status(403)
-            .json(httpErrors("You don't have access to this folder"));
-    }
-
-    next();
-};
-
-export const checkForWritePermissions: RequestHandler = async (req, res, next) => {
-    const { user, folder } = res.locals;
-
-    if (user.id == folder.owner) {
-        next();
-        return;
-    }
-
-    const folderPermission = await db.FolderPermission.findOne({ user: user.id, folder: folder.id });
-
-    if (!folderPermission) {
-        return res.status(403)
-            .json(httpErrors("You don't have access to this folder"));
-    }
-
-    if (folderPermission.permissions == "read") {
-        return res.status(401)
-            .json(httpErrors("You can't write on this folder"));
-    }
-
     next();
 };
 

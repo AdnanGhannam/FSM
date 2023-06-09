@@ -1,0 +1,27 @@
+<fms-sign-form title="Sign in" message="Don't have an account?" linkTo="/register">
+    <form class="sign-form__card__content" #form="ngForm" (submit)="login(form)">
+        <small class="success" *ngIf="redirected">Registeration success, please login</small>
+        <input class="fms-input" 
+            placeholder="Username"
+            name="username"
+            required="true"
+            ngModel />
+        <input class="fms-input" 
+            placeholder="password"
+            name="password"
+            type="password"
+            required
+            ngModel />
+        <div class="login-form__row">
+            <div class="checkbox">
+                <fms-checkbox ngModel name="remember" [id]="'rme'"></fms-checkbox>
+                <label for="rme">Remember me</label>
+            </div>
+            <a class="fms-link">Reset Password</a>
+        </div>
+        <button type="submit" [filled]="true" class="button fms-button">Login</button>
+        <div class="errors">
+            <small *ngFor="let error of errors" class="errors">*{{ error.message }}</small>
+        </div>
+    </form>
+</fms-sign-form>

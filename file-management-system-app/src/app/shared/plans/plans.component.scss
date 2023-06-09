@@ -1,0 +1,49 @@
+@use "../../utilities/mixin.scss";
+
+:host(.plans) {
+    display: block;
+    border-radius: 4px;
+    padding: 2em;
+    background-color: var(--bg-plans);
+
+    .plans-box {
+        @include mixin.flex(flex-start, flex-start, row, wrap);
+        gap: 1em;
+    }
+
+    .plan {
+        text-align: center;
+        line-height: 40px;
+
+        &__input {
+            display: none;
+
+            &:checked + .plan__label {
+                box-shadow: var(--bs-plans-active);
+            }
+        }
+
+        &__label {
+            display: block;
+            border-radius: 4px;
+            transition: all .2s ease;
+            box-shadow: var(--bs-plans);
+            padding: 1em;
+            cursor: pointer;
+        }
+
+        &__features {
+            text-align: left;
+            border-top: 1px solid var(--clr-plans-seperator);
+
+            .feature {
+                @include mixin.flex(flex-start);
+                gap: .35em;
+            }
+        }
+    }
+
+    .plans-button {
+        margin: 1em auto;
+    }
+}
